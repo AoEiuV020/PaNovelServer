@@ -20,5 +20,5 @@ buildNumber.properties
 /src/main/webapp/WEB-INF/db.properties
 
 # inplace,
-*.class
-*.jar
+/src/main/webapp/WEB-INF/classes/
+/src/main/webapp/WEB-INF/lib/
