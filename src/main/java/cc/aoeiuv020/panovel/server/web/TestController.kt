@@ -1,7 +1,9 @@
 package cc.aoeiuv020.panovel.server.web
 
 import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import java.util.*
 import javax.servlet.http.HttpServletRequest
@@ -92,6 +94,7 @@ class TestController {
 
     /**
      * 不用做什么就可以保持session，不同方法能拿到一样的内容，
+     * 请求其他方法也会刷新session时间，
      */
     @RequestMapping("/session2")
     @ResponseBody
@@ -107,6 +110,17 @@ class TestController {
             session.setAttribute("date", Date())
             session.setAttribute("timeout", session.maxInactiveInterval)
         }
+        return map
+    }
+
+    /**
+     * 要求age参数，没有的话是404，
+     */
+    @PostMapping("/post")
+    @ResponseBody
+    fun post(@RequestParam age: Int): Map<String, Any> {
+        val map = LinkedHashMap<String, Any>()
+        map["age"] = age
         return map
     }
 
