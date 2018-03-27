@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ResponseBody
 import java.util.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import javax.servlet.http.HttpSession
 import kotlin.collections.LinkedHashMap
 
 /**
@@ -64,6 +65,49 @@ class TestController {
     @ResponseBody
     fun exception(): String {
         throw Exception("test")
+    }
+
+    /**
+     * 写了session就会自动创建session, request.getSession也可以，
+     * 通过setAttribute保存数据，
+     * cookie里只有一个JSESSIONID=<id>,
+     *
+     */
+    @RequestMapping("/session")
+    @ResponseBody
+    fun session(session: HttpSession): Map<String, Any> {
+        val map = LinkedHashMap<String, Any>()
+        map.put("id", session.id)
+        map.put("timeout", session.maxInactiveInterval)
+        session.maxInactiveInterval = 10
+        session.attributeNames.asSequence().map { it to session.getAttribute(it) }.toMap().let {
+            map.put("attribute", it)
+        }
+        if (session.isNew) {
+            session.setAttribute("date", Date())
+            session.setAttribute("timeout", session.maxInactiveInterval)
+        }
+        return map
+    }
+
+    /**
+     * 不用做什么就可以保持session，不同方法能拿到一样的内容，
+     */
+    @RequestMapping("/session2")
+    @ResponseBody
+    fun session2(session: HttpSession): Map<String, Any> {
+        val map = LinkedHashMap<String, Any>()
+        map.put("id", session.id)
+        map.put("timeout", session.maxInactiveInterval)
+        session.maxInactiveInterval = 10
+        session.attributeNames.asSequence().map { it to session.getAttribute(it) }.toMap().let {
+            map.put("attribute", it)
+        }
+        if (session.isNew) {
+            session.setAttribute("date", Date())
+            session.setAttribute("timeout", session.maxInactiveInterval)
+        }
+        return map
     }
 
 }
