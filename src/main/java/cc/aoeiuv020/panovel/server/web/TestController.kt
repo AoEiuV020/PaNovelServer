@@ -4,6 +4,9 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
 import java.util.*
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
+import kotlin.collections.LinkedHashMap
 
 /**
  *
@@ -35,6 +38,26 @@ class TestController {
     @ResponseBody
     fun date(): Date {
         return Date()
+    }
+
+    /**
+     * parameterMap返回的value是数组，不知道什么情况会大于一个，
+     */
+    @RequestMapping("/http")
+    @ResponseBody
+    fun http(request: HttpServletRequest, response: HttpServletResponse): Map<String, Any> {
+        val map = LinkedHashMap<String, Any>()
+        request.headerNames.toList().map { it to request.getHeader(it) }.toMap().let {
+            map.put("headers", it)
+        }
+        request.parameterMap.mapValues { it.value[0] }.let {
+            map.put("parameters", it)
+        }
+        response.setHeader("key", "value")
+        response.headerNames.toList().map { it to response.getHeader(it) }.toMap().let {
+            map.put("responseHeaders", it)
+        }
+        return map
     }
 
 }
