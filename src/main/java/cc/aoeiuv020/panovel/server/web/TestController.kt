@@ -60,4 +60,10 @@ class TestController {
         return map
     }
 
+    @RequestMapping("/exception")
+    @ResponseBody
+    fun exception(): String {
+        throw Exception("test")
+    }
+
 }
