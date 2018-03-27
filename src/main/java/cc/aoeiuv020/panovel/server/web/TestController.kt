@@ -3,6 +3,7 @@ package cc.aoeiuv020.panovel.server.web
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
+import java.util.*
 
 /**
  *
@@ -26,5 +27,14 @@ class TestController {
     }
 
     data class Student(val name: String, val age: Int)
+
+    /**
+     * @return 返回的是数字，不知道怎么配置这里的Date formatter,
+     */
+    @RequestMapping("/date")
+    @ResponseBody
+    fun date(): Date {
+        return Date()
+    }
 
 }
