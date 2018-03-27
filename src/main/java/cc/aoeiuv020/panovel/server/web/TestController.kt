@@ -15,4 +15,16 @@ class TestController {
     fun kotlin(): String {
         return "kotlin\n"
     }
+
+    /**
+     * 已经配置了jackson, 对象转成json,
+     */
+    @RequestMapping("/object")
+    @ResponseBody
+    fun testObject(): Student {
+        return Student("AoEiuV020", 23)
+    }
+
+    data class Student(val name: String, val age: Int)
+
 }
