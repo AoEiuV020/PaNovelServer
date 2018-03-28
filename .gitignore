@@ -22,3 +22,8 @@ buildNumber.properties
 # inplace,
 /src/main/webapp/WEB-INF/classes/
 /src/main/webapp/WEB-INF/lib/
+
+# mybatis-generator
+/src/main/java/cc/aoeiuv020/panovel/server/dal/mapper/
+/src/main/java/cc/aoeiuv020/panovel/server/dal/model/
+/src/main/resources/mappers/
