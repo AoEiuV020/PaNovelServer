@@ -19,7 +19,7 @@ buildNumber.properties
 /.ideaDataSources
 
 # sql, 
-/src/main/webapp/WEB-INF/db.properties
+/src/main/resources/db.properties
 
 # inplace,
 /src/main/webapp/WEB-INF/classes/

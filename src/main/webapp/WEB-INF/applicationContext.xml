@@ -12,7 +12,7 @@
     <!--配置文件占位符 -->
     <bean
             class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="/WEB-INF/db.properties"/>
+        <property name="location" value="classpath:db.properties"/>
     </bean>
 
     <!--配置数据源 -->
