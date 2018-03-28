@@ -1,5 +1,9 @@
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- auto-generated definition
+create table user
+(
+  id    int          not null
+    primary key,
+  email varchar(255) null
+)
+  engine = InnoDB;
+
