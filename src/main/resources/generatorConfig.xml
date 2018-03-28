@@ -19,16 +19,16 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="cc.aoeiuv020.panovel.server.dal.model" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="cc.aoeiuv020.panovel.server.dal.model.autogen" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="mappers" targetProject="src/main/resources">
+        <sqlMapGenerator targetPackage="mappers.autogen" targetProject="src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="cc.aoeiuv020.panovel.server.dal.mapper"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="cc.aoeiuv020.panovel.server.dal.mapper.autogen"
                              targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
