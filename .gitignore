@@ -28,5 +28,5 @@ buildNumber.properties
 # mybatis-generator
 /src/main/java/cc/aoeiuv020/panovel/server/dal/mapper/autogen/
 /src/main/java/cc/aoeiuv020/panovel/server/dal/model/autogen/
-/src/main/resources/mappers/autogen/
+/src/main/resources/cc/aoeiuv020/panovel/server/dal/mapper/autogen
 

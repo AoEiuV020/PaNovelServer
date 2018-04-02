@@ -1,7 +1,7 @@
 -- auto-generated definition
 create table user
 (
-  id    int          not null
+  id    int auto_increment
     primary key,
   email varchar(255) null
 )

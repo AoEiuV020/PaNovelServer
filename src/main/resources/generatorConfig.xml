@@ -24,7 +24,8 @@
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="mappers.autogen" targetProject="src/main/resources">
+        <sqlMapGenerator targetPackage="cc.aoeiuv020.panovel.server.dal.mapper.autogen"
+                         targetProject="src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
