@@ -1,10 +1,8 @@
 package cc.aoeiuv020.panovel.server.web
 
+import cc.aoeiuv020.panovel.server.dal.model.MobRequest
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.ResponseBody
+import org.springframework.web.bind.annotation.*
 import java.util.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -122,6 +120,12 @@ class TestController {
         val map = LinkedHashMap<String, Any>()
         map["age"] = age
         return map
+    }
+
+    @RequestMapping("/error")
+    @ResponseBody
+    fun error(@RequestBody request: MobRequest) {
+        throw Exception("sss")
     }
 
 }
