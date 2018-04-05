@@ -12,7 +12,7 @@
     <!--配置文件占位符 -->
     <bean
             class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="/WEB-INF/db.properties"/>
+        <property name="location" value="classpath:db.properties"/>
     </bean>
 
     <!--配置数据源 -->
@@ -33,7 +33,8 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <!-- mapping.xml配置文件所在的位置 -->
-        <property name="mapperLocations" value="classpath:mappers/*.xml"/>
+        <!-- 废物，怎么写都只能让xml和mapper在同一个包下， -->
+        <!--<property name="mapperLocations" value="classpath*:mappers/**/*.xml"/>-->
         <property name="configuration">
 
             <bean class="org.apache.ibatis.session.Configuration">
@@ -44,6 +45,17 @@
 
         </property>
     </bean>
+    <!--
+        <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+            &lt;!&ndash; 这里的basePackage 指定了dao层接口路劲，这里的dao接口不用自己实现 &ndash;&gt;
+            <property name="basePackage" value="cc.aoeiuv020.panovel.server.dal.mappers.**" />
+            &lt;!&ndash; 如果只有一个数据源的话可以不用指定，但是如果有多个数据源的话必须要指定 &ndash;&gt;
+             <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+            &lt;!&ndash;直接指定了sqlsessionTemplate名称，这个和上面的其实是一样的 &ndash;&gt;
+            &lt;!&ndash; <property name="sqlSessionTemplateBeanName" value="sqlSession" /> &ndash;&gt;
+        </bean>
+    -->
+
 
     <!-- 事务管理器,使用spring的DataSourceTransactionManger -->
     <bean id="transactionManager"
