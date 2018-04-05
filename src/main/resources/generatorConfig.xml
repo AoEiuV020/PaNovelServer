@@ -34,7 +34,9 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="novel" domainObjectName="Novel"/>
+        <table tableName="novel" domainObjectName="Novel">
+            <generatedKey column="id" sqlStatement="mysql" identity="true"/>
+        </table>
 
     </context>
 </generatorConfiguration>

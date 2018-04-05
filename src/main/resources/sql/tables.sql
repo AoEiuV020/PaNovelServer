@@ -3,9 +3,10 @@ create table novel
 (
   id              int auto_increment
     primary key,
-  requester_type  varchar(255) not null,
-  requester_extra varchar(255) not null,
-  update_time     date         null,
+  requester_type  varchar(255)                        not null,
+  requester_extra varchar(255)                        not null,
+  update_time     timestamp default CURRENT_TIMESTAMP not null,
+  chapters_count  int default '0'                     not null,
   constraint novel_requester_uindex
   unique (requester_type, requester_extra)
 )

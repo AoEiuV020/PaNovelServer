@@ -1,6 +1,7 @@
 package cc.aoeiuv020.panovel.server.dal.model
 
 import cc.aoeiuv020.panovel.server.common.ErrorCode
+import cc.aoeiuv020.panovel.server.common.toJson
 
 /**
  *
@@ -8,9 +9,15 @@ import cc.aoeiuv020.panovel.server.common.ErrorCode
  */
 class MobResponse(
         var code: Int = ErrorCode.UNKNOWN_ERROR.code,
-        var data: Any? = null
+        val data: String = "{}"
 ) {
-    fun setError(error: ErrorCode) {
-        code = error.code
+    companion object {
+        fun success(data: Any = Any()): MobResponse {
+            return MobResponse(ErrorCode.SUCCESS.code, data.toJson())
+        }
+
+        fun error(error: ErrorCode = ErrorCode.UNKNOWN_ERROR): MobResponse {
+            return MobResponse(error.code)
+        }
     }
 }
