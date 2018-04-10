@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
 
 /**
  * Created by AoEiuV020 on 2018.04.05-10:31:26.
  */
-@Controller("/bookshelf")
+@Controller
+@RequestMapping("/bookshelf")
 class BookshelfController {
     @Autowired
     private lateinit var novelService: NovelService

@@ -1,6 +1,7 @@
 package cc.aoeiuv020.panovel.server.web
 
 import cc.aoeiuv020.panovel.server.common.Loggable
+import cc.aoeiuv020.panovel.server.common.info
 import cc.aoeiuv020.panovel.server.common.toBean
 import cc.aoeiuv020.panovel.server.common.toJson
 import cc.aoeiuv020.panovel.server.dal.model.autogen.Novel
@@ -38,23 +39,25 @@ class NotifyUpdateController : Loggable {
                     ?: mutableSetOf<Session>().also { bookshelfMap[id] = it }
         }
 
-        private fun notifyUpdate(from: Session, id: Int) {
-            getUsers(id).forEach { session ->
+        private fun notifyUpdate(from: Session, novel: Novel) {
+            getUsers(novel.id).forEach { session ->
                 session.takeIf { it.isOpen }
                         ?.takeIf { it != from }
                         ?.asyncRemote
-                        ?.sendText(ResponseMessage(Action.UPDATE, id.toJson()).toJson())
+                        ?.sendText(ResponseMessage(Action.UPDATE, novel.toJson()).toJson())
             }
         }
     }
 
     private fun update(from: Session, novel: Novel) {
+        logger.info { "${from.id} update ${novel.id}" }
         if (novelService.update(novel)) {
-            notifyUpdate(from, novel.id)
+            notifyUpdate(from, novel)
         }
     }
 
     private fun addAll(session: Session, list: List<Int>) {
+        logger.info { "${session.id} addAll $list" }
         // TODO: 顺便查一下有没有更新，
         list.forEach { id ->
             getUsers(id)
@@ -68,6 +71,7 @@ class NotifyUpdateController : Loggable {
     }
 
     private fun removeAll(session: Session, list: List<Int>) {
+        logger.info { "${session.id} removeAll $list" }
         list.forEach { id ->
             remove(session, id)
         }
@@ -75,11 +79,13 @@ class NotifyUpdateController : Loggable {
 
     @OnOpen
     fun onOpen(session: Session) {
+        logger.info { "${session.id} open" }
         sessions.add(session)
     }
 
     @OnClose
     fun onClose(session: Session) {
+        logger.info { "${session.id} close" }
         sessions.remove(session)
     }
 
@@ -96,30 +102,9 @@ class NotifyUpdateController : Loggable {
             }
         } catch (e: Exception) {
             // 这里不捕获的话整个websocket连接就断了，
-            e.printStackTrace()
+            logger.error("${session.id} message illegal", e)
         }
     }
 
 }
 
-
-class RequestMessage(
-        val action: Action = Action.UNKNOWN,
-        val data: String = "{}"
-) {
-    inline fun <reified T> getRealData(): T {
-        return data.toBean()
-    }
-}
-
-class ResponseMessage(
-        val action: Action = Action.UNKNOWN,
-        val data: String = "{}"
-)
-
-
-enum class Action {
-    UPDATE,
-    BOOKSHELF_ADD, BOOKSHELF_REMOVE,
-    UNKNOWN,
-}
