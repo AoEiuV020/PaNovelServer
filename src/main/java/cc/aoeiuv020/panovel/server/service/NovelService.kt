@@ -7,6 +7,10 @@ import cc.aoeiuv020.panovel.server.dal.model.autogen.Novel
  * Created by AoEiuV020 on 2018.04.05-09:13:02.
  */
 interface NovelService {
-    fun update(novel: Novel): Boolean
-    fun queryIds(novelList: List<Novel>): List<Int>
+    /**
+     * 通知服务器这本小说有更新，
+     *
+     * @return 如果确实传入的记录比数据里的更新就返回true,
+     */
+    fun uploadUpdate(novel: Novel): Boolean
 }

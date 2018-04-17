@@ -10,6 +10,10 @@ interface Loggable {
     val logger: Logger get() = LoggerFactory.getLogger(this.javaClass)
 }
 
+abstract class BaseLoggable : Loggable {
+    override val logger: Logger = LoggerFactory.getLogger(this.javaClass)
+}
+
 /**
  * 定义一系列拓展，
  * 主要就是先判断再执行lambda,
