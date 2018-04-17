@@ -2,6 +2,7 @@ package cc.aoeiuv020.panovel.server.service.impl
 
 import cc.aoeiuv020.panovel.server.common.BaseLoggable
 import cc.aoeiuv020.panovel.server.common.info
+import cc.aoeiuv020.panovel.server.common.toJson
 import cc.aoeiuv020.panovel.server.dal.mapper.autogen.NovelMapper
 import cc.aoeiuv020.panovel.server.dal.model.autogen.Novel
 import cc.aoeiuv020.panovel.server.dal.model.autogen.NovelExample
@@ -21,7 +22,7 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
     private lateinit var pushService: PushService
 
     override fun uploadUpdate(novel: Novel): Boolean {
-        logger.info { "uploadUpdate ${novel.requesterExtra}: ${novel.updateTime}" }
+        logger.info { "uploadUpdate ${novel.toJson()}" }
         // TODO: 这里需要行锁，
         // 第一次上传这本书就会查不到，
         val e = NovelExample().apply {
