@@ -13,4 +13,14 @@ interface NovelService {
      * @return 如果确实传入的记录比数据里的更新就返回true,
      */
     fun uploadUpdate(novel: Novel): Boolean
+
+    /**
+     * 需要更新的小说列表，
+     * 就是最后检查过更新小说，
+     *
+     * @param count 返回小说数量，
+     */
+    fun needRefreshNovelList(count: Int): List<Novel>
+
+    fun query(novel: Novel): Novel
 }

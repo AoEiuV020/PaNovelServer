@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody
  *
  * Created by AoEiuV020 on 2018.04.10-16:43:49.
  */
+@Deprecated("换路径了，", replaceWith = ReplaceWith("/novel/update"))
 @Controller
 @RequestMapping("/update")
 class UpdateController : BaseLoggable() {
