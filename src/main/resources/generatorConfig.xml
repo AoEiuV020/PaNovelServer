@@ -5,7 +5,8 @@
 
 <generatorConfiguration>
 
-    <properties url="file:/mnt/sext/code/git/PaNovelServer/src/main/resources/jdbc.properties"/>
+    <!-- gradle没法配置让这个resource生效， -->
+    <!--<properties resource="jdbc.properties"/>-->
 
     <context id="tables" targetRuntime="MyBatis3">
 
