@@ -18,9 +18,10 @@ interface NovelService {
      * 需要更新的小说列表，
      * 就是最后检查过更新小说，
      *
-     * @param count 返回小说数量，
+     * @param count 返回小说数量，最多500,
      */
     fun needRefreshNovelList(count: Int): List<Novel>
 
     fun query(novel: Novel): Novel
+    fun touch(novel: Novel): Boolean
 }

@@ -25,13 +25,17 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
 
     override fun query(novel: Novel): Novel {
         logger.info { "query ${novel.toJson()}" }
-        requireNotNull(novel.requesterExtra)
-        requireNotNull(novel.requesterType)
         return queryOrInsert(novel)
+    }
+
+    override fun touch(novel: Novel): Boolean {
+        logger.info { "touch ${novel.toJson()}" }
+        return updateActual(novel)
     }
 
     override fun needRefreshNovelList(count: Int): List<Novel> {
         logger.info { "needRefreshNovelList count: $count" }
+        require(count < 500)
         val e = NovelExample().apply {
             orderByClause = "modify_time desc limit $count"
         }
@@ -40,20 +44,10 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
 
     override fun uploadUpdate(novel: Novel): Boolean {
         logger.info { "uploadUpdate ${novel.toJson()}" }
-        requireNotNull(novel.requesterExtra)
-        requireNotNull(novel.requesterType)
-        requireNotNull(novel.chaptersCount)
-//        requireNotNull(novel.updateTime)
         return updateActual(novel)
     }
 
-    /**
-     * 更新小说，
-     *
-     * @return 返回是否真的是有更新，并成功发出推送，
-     */
-    private fun updateActual(novel: Novel): Boolean {
-        logger.debug { "updateActral ${novel.toJson()}" }
+    private fun hasUpdate(novel: Novel): Boolean {
         val result = queryOrInsert(novel)
         if (result === novel) {
             return false
@@ -73,19 +67,39 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
             }
         }
         // 这里是确实需要更新的情况，
-        result.chaptersCount = novel.chaptersCount
-        result.updateTime = novel.updateTime
-        return novelMapper.updateByPrimaryKeySelective(result) == 1
-                && pushService.pushUpdate(novel)
+        return true
     }
 
+    /**
+     * 更新小说，
+     *
+     * @return 返回是否真的是有更新并成功更新数据库，
+     */
+    private fun updateActual(novel: Novel): Boolean {
+        logger.debug { "updateActual ${novel.toJson()}" }
+        val hasUpdate = hasUpdate(novel)
+        if (hasUpdate) {
+            pushService.pushUpdate(novel)
+        }
+        return novelMapper.updateByPrimaryKeySelective(novel) == 1 && hasUpdate
+    }
+
+    /**
+     * 查询，顺便把查出来的id赋值传入的novel,
+     * @param novel 可以没有id,
+     */
     private fun queryActual(novel: Novel): Novel? {
         // 第一次上传这本书就会查不到，
+        novel.id?.let {
+            return novelMapper.selectByPrimaryKey(it)
+        }
         val e = NovelExample().apply {
             or().andRequesterExtraEqualTo(novel.requesterExtra)
                     .andRequesterTypeEqualTo(novel.requesterType)
         }
-        return novelMapper.selectByExample(e).firstOrNull()
+        return novelMapper.selectByExample(e).firstOrNull()?.also {
+            novel.id = it.id
+        }
     }
 
     private fun queryOrInsert(novel: Novel): Novel {

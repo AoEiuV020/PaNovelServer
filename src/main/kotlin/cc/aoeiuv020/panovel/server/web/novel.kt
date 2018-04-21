@@ -37,7 +37,7 @@ class NovelController : BaseLoggable() {
     @ResponseBody
     fun touch(@RequestBody mobRequest: MobRequest): MobResponse {
         val novel: Novel = mobRequest.getRealData()
-        val resultNovel = novelService.uploadUpdate(novel)
+        val resultNovel = novelService.touch(novel)
         return MobResponse.success(resultNovel)
     }
 
