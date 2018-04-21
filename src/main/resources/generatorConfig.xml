@@ -5,7 +5,8 @@
 
 <generatorConfiguration>
 
-    <properties resource="db.properties"/>
+    <!-- gradle没法配置让这个resource生效， -->
+    <!--<properties resource="jdbc.properties"/>-->
 
     <context id="tables" targetRuntime="MyBatis3">
 
@@ -13,13 +14,15 @@
                         connectionURL="${jdbc.url}"
                         userId="${jdbc.username}"
                         password="${jdbc.password}">
+            <property name="useInformationSchema" value="true"/>
         </jdbcConnection>
 
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="cc.aoeiuv020.panovel.server.dal.model.autogen" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="cc.aoeiuv020.panovel.server.dal.model.autogen"
+                            targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
