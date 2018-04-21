@@ -13,30 +13,46 @@ import cn.jpush.api.push.model.Platform
 import cn.jpush.api.push.model.PushPayload
 import cn.jpush.api.push.model.audience.Audience
 import org.slf4j.LoggerFactory
-import org.springframework.core.io.ClassPathResource
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.PropertySource
+import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
-import java.util.*
 
+@Component
+@PropertySource("classpath:jpush.properties")
+class JPushConfig {
+    @Value("\${appKey}")
+    lateinit var appKey: String
+    @Value("\${masterSecret}")
+    lateinit var masterSecret: String
+}
+
+@Component
+class JPushComponent {
+    @Autowired
+    private lateinit var config: JPushConfig
+
+    @Bean
+    fun client(): JPushClient {
+        return JPushClient(config.masterSecret, config.appKey, null, ClientConfig.getInstance())
+    }
+}
 
 @Service("pushService")
 class JPushService : PushService {
     companion object {
         val LOG = LoggerFactory.getLogger(JPushService::class.java)
-        private val properties = Properties().apply {
-            ClassPathResource("jpush.properties").file.inputStream().use {
-                load(it)
-            }
-        }
-        private val appKey = properties.getProperty("appKey")
-        private val masterSecret = properties.getProperty("masterSecret")
     }
 
-    var clientConfig = ClientConfig.getInstance()
-    var jpushClient = JPushClient(masterSecret, appKey, null, clientConfig)
+    @Autowired
+    private lateinit var jPushClient: JPushClient
+
     override fun pushUpdate(novel: Novel): Boolean {
         val payload = buildPayload(novel)
         try {
-            val result = jpushClient.sendPush(payload)
+            val result = jPushClient.sendPush(payload)
             LOG.info("Got result - $result")
             return result.isResultOK
         } catch (e: APIConnectionException) {
