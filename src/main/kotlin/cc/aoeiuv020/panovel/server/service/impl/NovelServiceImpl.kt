@@ -37,7 +37,7 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
         logger.info { "needRefreshNovelList count: $count" }
         require(count < 500)
         val e = NovelExample().apply {
-            orderByClause = "modify_time desc limit $count"
+            orderByClause = "modify_time asc limit $count"
         }
         return novelMapper.selectByExample(e)
     }
