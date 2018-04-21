@@ -48,5 +48,6 @@ buildNumber.properties
 /src/main/java/cc/aoeiuv020/panovel/server/dal/model/autogen/
 /src/main/resources/cc/aoeiuv020/panovel/server/dal/mapper/autogen
 
-# jpush,
+# release,
 /src/main/resources/jpush.properties
+/src/main/resources/jdbc.properties
