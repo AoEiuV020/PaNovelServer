@@ -1,3 +1,9 @@
+# gradle,
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# maven,
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -7,18 +13,41 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-
-# Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
 
-# Intellij,
-*.ipr
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
 *.iws
 *.iml
+*.ipr
+/out/
+
+
+
+# Intellij,
+/.ideaDataSources
 
 # sql, 
-/src/main/webapp/WEB-INF/db.properties
+/src/main/resources/db.properties
 
 # inplace,
-*.class
-*.jar
+/src/main/webapp/WEB-INF/classes/
+/src/main/webapp/WEB-INF/lib/
+
+# mybatis-generator
+/src/main/java/cc/aoeiuv020/panovel/server/dal/mapper/autogen/
+/src/main/java/cc/aoeiuv020/panovel/server/dal/model/autogen/
+/src/main/resources/cc/aoeiuv020/panovel/server/dal/mapper/autogen
+
+# release,
+/src/main/resources/jpush.properties
+/src/main/resources/jdbc.properties
