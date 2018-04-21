@@ -24,12 +24,12 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
     private lateinit var pushService: PushService
 
     override fun query(novel: Novel): Novel {
-        logger.info { "query ${novel.toJson()}" }
+        logger.debug { "query ${novel.toJson()}" }
         return queryOrInsert(novel)
     }
 
     override fun touch(novel: Novel): Boolean {
-        logger.info { "touch ${novel.toJson()}" }
+        logger.debug { "touch ${novel.toJson()}" }
         return updateActual(novel)
     }
 
@@ -76,7 +76,6 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
      * @return 返回是否真的是有更新并成功更新数据库，
      */
     private fun updateActual(novel: Novel): Boolean {
-        logger.debug { "updateActual ${novel.toJson()}" }
         val hasUpdate = hasUpdate(novel)
         if (hasUpdate) {
             pushService.pushUpdate(novel)
