@@ -128,7 +128,7 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
     private fun queryOrInsert(novel: Novel): Novel {
         return queryActual(novel)
                 ?: novel.also {
-                    novelMapper.insert(novel)
+                    novelMapper.insertSelective(novel)
                 }
     }
 }
