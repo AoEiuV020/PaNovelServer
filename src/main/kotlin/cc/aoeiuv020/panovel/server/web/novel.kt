@@ -37,7 +37,7 @@ class NovelController : BaseLoggable() {
     @ResponseBody
     fun touch(@RequestBody mobRequest: MobRequest): MobResponse {
         val novel: Novel = mobRequest.getRealData()
-        if (novel.site == null || novel.author == null || novel.name == null) {
+        if (novel.site == null || novel.author == null || novel.name == null || novel.detail == null) {
             // 和2.2.2之前旧版接口路径一致，但不兼容，直接返回错误，
             return MobResponse.error()
         }
@@ -52,7 +52,7 @@ class NovelController : BaseLoggable() {
     @ResponseBody
     fun update(@RequestBody mobRequest: MobRequest): MobResponse {
         val novel: Novel = mobRequest.getRealData()
-        if (novel.site == null || novel.author == null || novel.name == null) {
+        if (novel.site == null || novel.author == null || novel.name == null || novel.detail == null) {
             // 和2.2.2之前旧版接口路径一致，但不兼容，直接返回错误，
             return MobResponse.error()
         }
@@ -68,7 +68,7 @@ class NovelController : BaseLoggable() {
     @ResponseBody
     fun query(@RequestBody mobRequest: MobRequest): MobResponse {
         val novel: Novel = mobRequest.getRealData()
-        if (novel.site == null || novel.author == null || novel.name == null) {
+        if (novel.site == null || novel.author == null || novel.name == null || novel.detail == null) {
             // 和2.2.2之前旧版接口路径一致，但不兼容，直接返回错误，
             return MobResponse.error()
         }
