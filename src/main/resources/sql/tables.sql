@@ -1,17 +1,19 @@
--- auto-generated definition
 create table novel
 (
-  id              int auto_increment
+  id                  int auto_increment
     primary key,
-  requester_type  varchar(255)                            not null,
-  requester_extra varchar(255)                            not null,
-  update_time     timestamp default '1971-01-01 00:00:00' not null,
-  chapters_count  int default '0'                         not null,
-  modify_time     timestamp default CURRENT_TIMESTAMP     not null
-  on update CURRENT_TIMESTAMP
-  comment '本行更新的时间，也就是有人刷出小说更新并传上来的时间，',
-  constraint novel_requester_uindex
-  unique (requester_type, requester_extra)
+  site                varchar(255)                        not null,
+  author              varchar(255)                        not null,
+  name                varchar(255)                        not null,
+  detail              varchar(255)                        not null,
+  chapters_count      int default '0'                     not null,
+  receive_update_time timestamp default CURRENT_TIMESTAMP not null
+  comment '拿到上一个更新的时间, 也就是上次刷出更新的[checkUpdateTime],',
+  check_update_time   timestamp default CURRENT_TIMESTAMP not null
+  comment '检查更新时间, 也就是这个时间之前的更新是已知的，不论有无更新，',
+  constraint novel_site_author_name_uindex
+  unique (site, author, name)
 )
-  engine = InnoDB;
+  engine = InnoDB
+  charset = utf8;
 
