@@ -27,6 +27,10 @@ class UpdateController : BaseLoggable() {
     @ResponseBody
     fun upload(@RequestBody mobRequest: MobRequest): MobResponse {
         val novel: Novel = mobRequest.getRealData()
+        if (novel.site == null || novel.author == null || novel.name == null) {
+            // 和2.2.2之前旧版接口路径一致，但不兼容，直接返回错误，
+            return MobResponse.error()
+        }
         val resultNovel = novelService.uploadUpdate(novel)
         return MobResponse.success(resultNovel)
     }

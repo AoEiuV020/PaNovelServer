@@ -52,7 +52,7 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
         logger.info { "needRefreshNovelList count: $count, refreshTime: <${refreshLatest.get()}, ${refreshNow.get()}>" }
         require(count < 500)
         return novelMapper.selectByExample(NovelExample().apply {
-            orderByClause = "modify_time asc limit $count"
+            orderByClause = "check_update_time asc limit $count"
             or().andCheckUpdateTimeGreaterThan(refreshNow.get())
         }).also {
             it.lastOrNull()?.checkUpdateTime?.also { nt ->
