@@ -53,9 +53,9 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
         require(count < 500)
         return novelMapper.selectByExample(NovelExample().apply {
             orderByClause = "modify_time asc limit $count"
-            or().andModifyTimeGreaterThan(refreshNow.get())
+            or().andCheckUpdateTimeGreaterThan(refreshNow.get())
         }).also {
-            it.lastOrNull()?.modifyTime?.also { nt ->
+            it.lastOrNull()?.checkUpdateTime?.also { nt ->
                 val lt = refreshLatest.get()
                 if (nt > lt) {
                     // 如果取出的最后一个刷新时间大于保存的整张表最新刷新时间，
@@ -72,7 +72,7 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
     private fun latestModifyTime(): Date {
         return novelMapper.selectByExample(NovelExample().apply {
             orderByClause = "modify_time desc limit 1"
-        }).firstOrNull()?.modifyTime ?: Date(0)
+        }).firstOrNull()?.checkUpdateTime ?: Date(0)
     }
 
     override fun uploadUpdate(novel: Novel): Boolean {
@@ -87,7 +87,7 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
         }
         // 有的小说可能不知道更新时间，那就是默认，未必会相等，时区没考虑,
         // 所以只判断章节数，
-        return novel.chaptersCount > result.chaptersCount
+        return novel.chaptersCount ?: 0 > result.chaptersCount
     }
 
     /**
@@ -100,7 +100,7 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
      */
     private fun updateActual(novel: Novel): Boolean {
         val hasUpdate = hasUpdate(novel)
-        novel.modifyTime = Date()
+        novel.checkUpdateTime = Date()
         if (hasUpdate) {
             pushService.pushUpdate(novel)
         }
@@ -117,8 +117,9 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
             return novelMapper.selectByPrimaryKey(it)
         }
         val e = NovelExample().apply {
-            or().andRequesterExtraEqualTo(novel.requesterExtra)
-                    .andRequesterTypeEqualTo(novel.requesterType)
+            or().andSiteEqualTo(novel.site)
+                    .andAuthorEqualTo(novel.author)
+                    .andNameEqualTo(novel.name)
         }
         return novelMapper.selectByExample(e).firstOrNull()?.also {
             novel.id = it.id

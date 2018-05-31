@@ -17,4 +17,5 @@ fun String.md5(): String {
     }
 }
 
-fun Novel.md5(): String = "$requesterType.$requesterExtra".md5()
+// 算md5以确保长度小于，40, 极光推送限制tag长度40,
+fun Novel.md5(): String = "$site.$author.$name".md5()
