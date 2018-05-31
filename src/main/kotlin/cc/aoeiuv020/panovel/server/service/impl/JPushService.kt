@@ -60,12 +60,17 @@ class JPushService : PushService {
             LOG.error("Sendno: " + payload.sendno)
 
         } catch (e: APIRequestException) {
-            LOG.error("Error response from JPush server. Should review and fix it. ", e)
-            LOG.info("HTTP Status: " + e.status)
-            LOG.info("Error Code: " + e.errorCode)
-            LOG.info("Error Message: " + e.errorMessage)
-            LOG.info("Msg ID: " + e.msgId)
-            LOG.error("Sendno: " + payload.sendno)
+            if (e.errorCode == 1011) {
+                // cannot find user by this audience,
+                LOG.info(e.errorMessage)
+            } else {
+                LOG.error("Error response from JPush server. Should review and fix it. ", e)
+                LOG.info("HTTP Status: " + e.status)
+                LOG.info("Error Code: " + e.errorCode)
+                LOG.info("Error Message: " + e.errorMessage)
+                LOG.info("Msg ID: " + e.msgId)
+                LOG.error("Sendno: " + payload.sendno)
+            }
         }
         return false
 
