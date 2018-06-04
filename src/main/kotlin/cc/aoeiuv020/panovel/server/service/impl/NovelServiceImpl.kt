@@ -71,7 +71,7 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
 
     private fun latestModifyTime(): Date {
         return novelMapper.selectByExample(NovelExample().apply {
-            orderByClause = "modify_time desc limit 1"
+            orderByClause = "check_update_time desc limit 1"
         }).firstOrNull()?.checkUpdateTime ?: Date(0)
     }
 
