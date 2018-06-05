@@ -39,11 +39,29 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
 
     override fun query(novel: Novel): Novel {
         logger.info { "query ${novel.toJson()}" }
-        return queryOrInsert(novel)
+        // 不存在的小说不要因为有用户查询就插入，
+        // 不存在的直接返回传入的小说对象，
+        return queryActual(novel)
+                .also {
+                    logger.info { "notFound: <${novel.run { "$site.$author.$name" }}>" }
+                }
+                ?: novel
     }
 
     override fun touch(novel: Novel): Boolean {
         logger.info { "touch ${novel.toJson()}" }
+        val exists = queryActual(novel)
+        if (exists == null) {
+            // 不存在的小说不要因为有用户刷新就插入，
+            logger.info { "notFound: <${novel.run { "$site.$author.$name" }}>" }
+            return false
+        }
+        // 浪费一次查询，无所谓了，
+        return updateActual(novel)
+    }
+
+    override fun uploadUpdate(novel: Novel): Boolean {
+        logger.info { "uploadUpdate ${novel.toJson()}" }
         return updateActual(novel)
     }
 
@@ -72,11 +90,6 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
         return novelMapper.selectByExample(NovelExample().apply {
             orderByClause = "check_update_time desc limit 1"
         }).firstOrNull()?.checkUpdateTime ?: Date(0)
-    }
-
-    override fun uploadUpdate(novel: Novel): Boolean {
-        logger.info { "uploadUpdate ${novel.toJson()}" }
-        return updateActual(novel)
     }
 
     private fun hasUpdate(novel: Novel): Boolean {
