@@ -1,6 +1,7 @@
 package cc.aoeiuv020.panovel.server.web
 
 import cc.aoeiuv020.panovel.server.common.BaseLoggable
+import cc.aoeiuv020.panovel.server.common.ErrorCode
 import cc.aoeiuv020.panovel.server.dal.model.MobRequest
 import cc.aoeiuv020.panovel.server.dal.model.MobResponse
 import cc.aoeiuv020.panovel.server.dal.model.autogen.Novel
@@ -39,7 +40,7 @@ class NovelController : BaseLoggable() {
         val novel: Novel = mobRequest.getRealData()
         if (novel.site == null || novel.author == null || novel.name == null || novel.detail == null) {
             // 和2.2.2之前旧版接口路径一致，但不兼容，直接返回错误，
-            return MobResponse.error()
+            return MobResponse.error(ErrorCode.OLD_VERSION_NOT_SUPPORT)
         }
         val resultNovel = novelService.touch(novel)
         return MobResponse.success(resultNovel)
@@ -54,7 +55,7 @@ class NovelController : BaseLoggable() {
         val novel: Novel = mobRequest.getRealData()
         if (novel.site == null || novel.author == null || novel.name == null || novel.detail == null) {
             // 和2.2.2之前旧版接口路径一致，但不兼容，直接返回错误，
-            return MobResponse.error()
+            return MobResponse.error(ErrorCode.OLD_VERSION_NOT_SUPPORT)
         }
         val resultNovel = novelService.uploadUpdate(novel)
         return MobResponse.success(resultNovel)
@@ -70,7 +71,7 @@ class NovelController : BaseLoggable() {
         val novel: Novel = mobRequest.getRealData()
         if (novel.site == null || novel.author == null || novel.name == null || novel.detail == null) {
             // 和2.2.2之前旧版接口路径一致，但不兼容，直接返回错误，
-            return MobResponse.error()
+            return MobResponse.error(ErrorCode.OLD_VERSION_NOT_SUPPORT)
         }
         val resultNovel = novelService.query(novel)
         return MobResponse.success(resultNovel)

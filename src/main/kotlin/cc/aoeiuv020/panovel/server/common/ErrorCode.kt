@@ -5,5 +5,6 @@ package cc.aoeiuv020.panovel.server.common
  */
 enum class ErrorCode(val code: Int) {
     SUCCESS(200),
+    OLD_VERSION_NOT_SUPPORT(500),
     UNKNOWN_ERROR(-1)
 }

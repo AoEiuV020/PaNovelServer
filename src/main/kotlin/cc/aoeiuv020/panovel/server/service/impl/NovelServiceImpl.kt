@@ -1,7 +1,6 @@
 package cc.aoeiuv020.panovel.server.service.impl
 
 import cc.aoeiuv020.panovel.server.common.BaseLoggable
-import cc.aoeiuv020.panovel.server.common.debug
 import cc.aoeiuv020.panovel.server.common.info
 import cc.aoeiuv020.panovel.server.common.toJson
 import cc.aoeiuv020.panovel.server.dal.mapper.autogen.NovelMapper
@@ -39,12 +38,12 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
     private lateinit var pushService: PushService
 
     override fun query(novel: Novel): Novel {
-        logger.debug { "query ${novel.toJson()}" }
+        logger.info { "query ${novel.toJson()}" }
         return queryOrInsert(novel)
     }
 
     override fun touch(novel: Novel): Boolean {
-        logger.debug { "touch ${novel.toJson()}" }
+        logger.info { "touch ${novel.toJson()}" }
         return updateActual(novel)
     }
 
