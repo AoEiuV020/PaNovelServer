@@ -1,6 +1,7 @@
 package cc.aoeiuv020.panovel.server.service.impl
 
 import cc.aoeiuv020.panovel.server.common.BaseLoggable
+import cc.aoeiuv020.panovel.server.common.debug
 import cc.aoeiuv020.panovel.server.common.info
 import cc.aoeiuv020.panovel.server.common.toJson
 import cc.aoeiuv020.panovel.server.dal.mapper.autogen.NovelMapper
@@ -121,6 +122,7 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
             // 如果小说三天没更新，就从数据库删除，
             // 判断的是传入的小说对象，
             // 给touch接口用的，因为touch也走这里，所以写在这里，
+            logger.debug { "delete: <${novel.run { "$site.$author.$name" }}>" }
             novelMapper.deleteByPrimaryKey(novel.id)
         }
         return novelMapper.updateByPrimaryKeySelective(novel) == 1 && hasUpdate

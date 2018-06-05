@@ -68,6 +68,7 @@ class JPushService : PushService {
                 // cannot find user by this audience,
                 LOG.info(e.errorMessage)
                 // 没人订阅的小说，直接从服务器删除，可能导致某些小说反复删除后被搜索出来，无所谓了，
+                LOG.info("delete: <${novel.run { "$site.$author.$name" }}>")
                 novelMapper.deleteByPrimaryKey(novel.id)
             } else {
                 LOG.error("Error response from JPush server. Should review and fix it. ", e)
