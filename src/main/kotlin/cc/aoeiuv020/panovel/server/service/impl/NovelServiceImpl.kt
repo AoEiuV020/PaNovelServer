@@ -11,6 +11,7 @@ import cc.aoeiuv020.panovel.server.service.PushService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicReference
 
 /**
@@ -94,6 +95,7 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
 
     private fun hasUpdate(novel: Novel): Boolean {
         val result = queryOrInsert(novel)
+        // 目前好像没有会相系的情况，
         if (result === novel) {
             return false
         }
@@ -115,6 +117,11 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
         novel.checkUpdateTime = Date()
         if (hasUpdate) {
             pushService.pushUpdate(novel)
+        } else if (novel.checkUpdateTime.time - novel.receiveUpdateTime.time > TimeUnit.DAYS.toMillis(3)) {
+            // 如果小说三天没更新，就从数据库删除，
+            // 判断的是传入的小说对象，
+            // 给touch接口用的，因为touch也走这里，所以写在这里，
+            novelMapper.deleteByPrimaryKey(novel.id)
         }
         return novelMapper.updateByPrimaryKeySelective(novel) == 1 && hasUpdate
     }
@@ -133,6 +140,7 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
                     .andAuthorEqualTo(novel.author)
                     .andNameEqualTo(novel.name)
         }
+        // 查到小说把id设置到传入的小说对象，和返回和对象和id都可用，
         return novelMapper.selectByExample(e).firstOrNull()?.also {
             novel.id = it.id
         }
