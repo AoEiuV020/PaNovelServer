@@ -2,6 +2,7 @@ package cc.aoeiuv020.panovel.server.service.impl
 
 import cc.aoeiuv020.panovel.server.common.md5
 import cc.aoeiuv020.panovel.server.common.toJson
+import cc.aoeiuv020.panovel.server.dal.mapper.autogen.NovelMapper
 import cc.aoeiuv020.panovel.server.dal.model.autogen.Novel
 import cc.aoeiuv020.panovel.server.service.PushService
 import cn.jiguang.common.ClientConfig
@@ -46,6 +47,9 @@ class JPushService : PushService {
         val LOG = LoggerFactory.getLogger(JPushService::class.java)
     }
 
+
+    @Autowired
+    private lateinit var novelMapper: NovelMapper
     @Autowired
     private lateinit var jPushClient: JPushClient
 
@@ -63,6 +67,8 @@ class JPushService : PushService {
             if (e.errorCode == 1011) {
                 // cannot find user by this audience,
                 LOG.info(e.errorMessage)
+                // 没人订阅的小说，直接从服务器删除，可能导致某些小说反复删除后被搜索出来，无所谓了，
+                novelMapper.deleteByPrimaryKey(novel.id)
             } else {
                 LOG.error("Error response from JPush server. Should review and fix it. ", e)
                 LOG.info("HTTP Status: " + e.status)
