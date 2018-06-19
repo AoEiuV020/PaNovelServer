@@ -68,9 +68,9 @@ class NovelController : BaseLoggable() {
     @PostMapping("/queryList")
     @ResponseBody
     fun queryList(@RequestBody mobRequest: MobRequest): MobResponse {
-        val novelList: List<Novel> = mobRequest.getRealData()
-        val resultNovel = novelService.queryList(novelList)
-        return MobResponse.success(resultNovel)
+        val novelMap: Map<Long, Novel> = mobRequest.getRealData()
+        val queryResult = novelService.queryList(novelMap)
+        return MobResponse.success(queryResult)
     }
 
     @RequestMapping("/minVersion")

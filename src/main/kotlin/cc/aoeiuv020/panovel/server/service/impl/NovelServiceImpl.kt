@@ -5,6 +5,7 @@ import cc.aoeiuv020.panovel.server.common.debug
 import cc.aoeiuv020.panovel.server.common.info
 import cc.aoeiuv020.panovel.server.common.toJson
 import cc.aoeiuv020.panovel.server.dal.mapper.autogen.NovelMapper
+import cc.aoeiuv020.panovel.server.dal.model.QueryResponse
 import cc.aoeiuv020.panovel.server.dal.model.autogen.Novel
 import cc.aoeiuv020.panovel.server.dal.model.autogen.NovelExample
 import cc.aoeiuv020.panovel.server.service.NovelService
@@ -43,9 +44,10 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
         return "3.1.4"
     }
 
-    override fun queryList(novelList: List<Novel>): List<Novel> {
-        return novelList.map {
-            query(it)
+    override fun queryList(novelMap: Map<Long, Novel>): Map<Long, QueryResponse> {
+        return novelMap.mapValues { (_, novel) ->
+            val result = query(novel)
+            QueryResponse(result.chaptersCount, result.checkUpdateTime)
         }
     }
 

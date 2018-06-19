@@ -1,5 +1,6 @@
 package cc.aoeiuv020.panovel.server.service
 
+import cc.aoeiuv020.panovel.server.dal.model.QueryResponse
 import cc.aoeiuv020.panovel.server.dal.model.autogen.Novel
 
 /**
@@ -24,8 +25,10 @@ interface NovelService {
 
     /**
      * 用户打开小说列表时对整个列表调用，查询是否有更新，
+     *
+     * @param novelMap key是客户端的id, 为了节约流量，返回就不返回完整的Novel对象了，带上id确保客户端识别，
      */
-    fun queryList(novelList: List<Novel>): List<Novel>
+    fun queryList(novelMap: Map<Long, Novel>): Map<Long, QueryResponse>
 
     /**
      * 有用户刷新但刷新结果是没有更新时调用，
