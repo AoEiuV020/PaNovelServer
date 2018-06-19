@@ -36,9 +36,6 @@ buildNumber.properties
 # Intellij,
 /.ideaDataSources
 
-# sql, 
-/src/main/resources/db.properties
-
 # inplace,
 /src/main/webapp/WEB-INF/classes/
 /src/main/webapp/WEB-INF/lib/
@@ -51,3 +48,4 @@ buildNumber.properties
 # release,
 /src/main/resources/jpush.properties
 /src/main/resources/jdbc.properties
+/src/main/resources/application.properties
