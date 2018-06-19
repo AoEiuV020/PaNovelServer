@@ -31,4 +31,6 @@ interface NovelService {
      * 有用户刷新但刷新结果是没有更新时调用，
      */
     fun touch(novel: Novel): Boolean
+
+    fun minVersion(): String
 }

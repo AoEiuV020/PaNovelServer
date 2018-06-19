@@ -77,4 +77,11 @@ class NovelController : BaseLoggable() {
         return MobResponse.success(resultNovel)
     }
 
+    @RequestMapping("/minVersion")
+    @ResponseBody
+    fun minVersion(): MobResponse {
+        val version = novelService.minVersion()
+        return MobResponse.success(version)
+    }
+
 }

@@ -39,6 +39,10 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
     @Autowired
     private lateinit var pushService: PushService
 
+    override fun minVersion(): String {
+        return "3.1.4"
+    }
+
     override fun query(novel: Novel): Novel {
         logger.info { "query ${novel.toJson()}" }
         // 不存在的小说不要因为有用户查询就插入，
