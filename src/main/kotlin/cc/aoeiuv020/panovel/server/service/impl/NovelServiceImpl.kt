@@ -43,7 +43,13 @@ class NovelServiceImpl : NovelService, BaseLoggable() {
         return "3.1.4"
     }
 
-    override fun query(novel: Novel): Novel {
+    override fun queryList(novelList: List<Novel>): List<Novel> {
+        return novelList.map {
+            query(it)
+        }
+    }
+
+    private fun query(novel: Novel): Novel {
         logger.info { "query ${novel.toJson()}" }
         // 不存在的小说不要因为有用户查询就插入，
         // 不存在的直接返回传入的小说对象，

@@ -65,15 +65,11 @@ class NovelController : BaseLoggable() {
      * 主要是为了拿到小说的最后检查更新时间，
      * 如果数据库没有这本小说，则会插入，但返回的小说对象就的检查更新时间就是null,
      */
-    @PostMapping("/query")
+    @PostMapping("/queryList")
     @ResponseBody
-    fun query(@RequestBody mobRequest: MobRequest): MobResponse {
-        val novel: Novel = mobRequest.getRealData()
-        if (novel.site == null || novel.author == null || novel.name == null || novel.detail == null) {
-            // 和2.2.2之前旧版接口路径一致，但不兼容，直接返回错误，
-            return MobResponse.error(ErrorCode.OLD_VERSION_NOT_SUPPORT)
-        }
-        val resultNovel = novelService.query(novel)
+    fun queryList(@RequestBody mobRequest: MobRequest): MobResponse {
+        val novelList: List<Novel> = mobRequest.getRealData()
+        val resultNovel = novelService.queryList(novelList)
         return MobResponse.success(resultNovel)
     }
 

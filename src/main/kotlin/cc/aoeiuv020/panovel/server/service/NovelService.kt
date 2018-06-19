@@ -23,9 +23,9 @@ interface NovelService {
     fun needRefreshNovelList(count: Int): List<Novel>
 
     /**
-     * 用户打开小说列表时对每本小说调用，查询是否有更新，
+     * 用户打开小说列表时对整个列表调用，查询是否有更新，
      */
-    fun query(novel: Novel): Novel
+    fun queryList(novelList: List<Novel>): List<Novel>
 
     /**
      * 有用户刷新但刷新结果是没有更新时调用，
