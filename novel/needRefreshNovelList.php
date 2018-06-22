@@ -8,11 +8,12 @@ try {
     include __DIR__ . '/../connect.php';
     $stmt = $con->prepare("select * from novel order by check_update_time limit ?");
     $limit = json_decode($data);
+    requireArg(is_int($limit), "limit must be int,");
     $stmt->bind_param('i', $limit);
     $stmt->execute();
     $arr = resultToArray($stmt->get_result());
     $con->close();
     success($arr);
 } catch (Throwable $e) {
-    apiError($e);
+    serverError($e->getMessage());
 }

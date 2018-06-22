@@ -8,9 +8,15 @@ class MobResponse
     public $code = -1;
     public $data = "{}";
 
-    public function fail($message)
+    public function serverError($message)
     {
         $this->code = 500;
+        $this->data = json_encode($message);
+    }
+
+    public function illegalRequest($message)
+    {
+        $this->code = 400;
         $this->data = json_encode($message);
     }
 

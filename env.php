@@ -7,17 +7,17 @@ require_once __DIR__ . '/model/MobResponse.php';
 require_once __DIR__ . '/Datasource.php';
 $ds = new DataSource;
 
-function apiError(Throwable $t)
+function illegalRequest($message = null)
 {
     $response = new MobResponse();
-    $response->fail($t->getMessage());
+    $response->illegalRequest($message);
     die(json_encode($response));
 }
 
-function apiErrorString(string $message)
+function serverError($message = null)
 {
     $response = new MobResponse();
-    $response->fail($message);
+    $response->serverError($message);
     die(json_encode($response));
 }
 
@@ -25,11 +25,28 @@ function success($data)
 {
     $response = new MobResponse();
     $response->success($data);
-    print json_encode($response);
+    die(json_encode($response));
 }
 
-/** @noinspection PhpIncludeInspection */
-if (!@include __DIR__ . '/config.ini.php') {
+ini_set('display_errors', 'off');
+ini_set('html_errors', 0);
+error_reporting(0);
+function ShutdownHandler()
+{
+    if (@is_array($error = @error_get_last())) {
+        serverError($error['message']);
+    };
+
+    return (TRUE);
+}
+
+// 成功结束也会调用，
+//register_shutdown_function('ShutdownHandler');
+
+if (file_exists(__DIR__ . '/config.ini.php')) {
+    /** @noinspection PhpIncludeInspection */
+    include __DIR__ . '/config.ini.php';
+} else {
     include __DIR__ . '/config.sample.ini.php';
 }
 
@@ -41,4 +58,11 @@ function resultToArray(mysqli_result $result)
     }
     $result->free();
     return $arr;
+}
+
+function requireArg(bool $value, string $message)
+{
+    if (!$value) {
+        illegalRequest($message);
+    }
 }
