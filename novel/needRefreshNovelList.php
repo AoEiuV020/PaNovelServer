@@ -47,6 +47,8 @@ try {
     }
     $con->close();
 
+    error_log("query refresh list later than $lastTime count: " . count($arr));
+
     success($arr);
 } catch (Throwable $e) {
     serverError($e->getMessage());
