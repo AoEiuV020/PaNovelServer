@@ -13,5 +13,14 @@ class Novel
     public $detail;
     public $chapters_count;
     public $receive_update_time;
-    public $check_update_time;
+    public $check_update_time; // 2018-06-19 18:03:54
+
+    public function __construct(array $array = null)
+    {
+        if ($array) {
+            foreach ($this as $field => &$value) {
+                $value = $array[$field] ?? null;
+            }
+        }
+    }
 }

@@ -1,28 +1,22 @@
 <?php
 require_once __DIR__ . '/env.php';
-$post = '
-{
-"data": {
-    "id": 12
-}
-}
-';
-print $post;
-$json = json_decode($post, true);
-print_r($json);
-$data = $json['data'];
-print_r($data);
-$f = is_string($data);
-print $f;
-var_dump($f);
+require_once __DIR__ . '/model/Novel.php';
 
-$v = false;
-print '' . $f;
+error_reporting(-1);
 
-print gettype($data);
+$novel = new Novel();
+$arr = (array)$novel;
 
-$a = $json['dat'] ?? null;
-if ($a != null) {
-    throw new Exception("hhh");
-}
+// php并发是多进程，不共享变量，
+static $count = 0;
+++$count;
+print($count);
 
+require_once __DIR__ . '/connect.php';
+
+$arr = resultToArray($con->query("select * from novel limit 1"));
+
+$lastTimeFile = __DIR__ . '/novel/lastTime';
+print (file_get_contents($lastTimeFile));
+
+unlink($lastTimeFile);
