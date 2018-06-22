@@ -1,0 +1,21 @@
+server {
+	listen 80;
+    server_name php;
+    access_log  /var/log/nginx/php.access.log;
+	error_log  /var/log/nginx/php.error.log;
+	root   /mnt/sext/code/git/PaNovelServer;
+
+    location / {
+        index  index.php index.html index.htm;
+    }
+	location = /favicon.ico {
+		log_not_found off;
+		access_log off;
+	}
+    location ^~ /novel/ {
+        include fastcgi.conf;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name.php;
+        fastcgi_pass 127.0.0.1:9000;
+    }
+}
+
