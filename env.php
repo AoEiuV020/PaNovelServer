@@ -57,11 +57,44 @@ function resultToArray(mysqli_result $result)
     return $arr;
 }
 
-function requireArg(bool $value, string $message)
+// 接口要求请求参数满足什么条件，
+function requireArg($value, string $message)
 {
     if (!$value) {
         illegalRequest($message);
     }
+    return $value;
+}
+
+// 服务器断言什么，有错是服务器的错，
+// 不带bool， 可以传任意值，
+function assertArg($value, string $message)
+{
+    if (!$value) {
+        serverError($message);
+    }
+    return $value;
+}
+
+function now()
+{
+    return date('Y-m-d H:i:s');
+}
+
+function convertUnderline($str)
+{
+    $str = preg_replace_callback('/([-_]+([a-z]{1}))/i', function ($matches) {
+        return strtoupper($matches[2]);
+    }, $str);
+    return $str;
+}
+
+function humpToLine($str)
+{
+    $str = preg_replace_callback('/([A-Z]{1})/', function ($matches) {
+        return '_' . strtolower($matches[0]);
+    }, $str);
+    return $str;
 }
 
 

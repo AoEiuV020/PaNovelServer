@@ -6,9 +6,7 @@
 require_once __DIR__ . '/env.php';
 try {
     $con = new mysqli($ds->host, $ds->username, $ds->password, $ds->database);
-    if ($con->connect_error) {
-        serverError('connect error: ' . $con->connect_error);
-    }
+    assertArg(!$con->connect_error, 'connect error: ' . $con->connect_error);
     $con->set_charset($ds->charset);
 } catch (Throwable $e) {
     serverError($e->getMessage());

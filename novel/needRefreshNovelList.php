@@ -32,7 +32,7 @@ try {
 
     if (count($arr) > 0) {
         $last = new Novel($arr[count($arr) - 1]);
-        file_put_contents($lastTimeFile, $last->check_update_time);
+        file_put_contents($lastTimeFile, $last->checkUpdateTime);
     } else {
         file_put_contents($lastTimeFile, 0);
         // 遍历完了后额外尝试一次，只一次，
@@ -42,7 +42,7 @@ try {
         $arr = resultToArray($stmt->get_result());
         if (count($arr) > 0) {
             $last = new Novel($arr[count($arr) - 1]);
-            file_put_contents($lastTimeFile, $last->check_update_time);
+            file_put_contents($lastTimeFile, $last->checkUpdateTime);
         }
     }
     $con->close();
