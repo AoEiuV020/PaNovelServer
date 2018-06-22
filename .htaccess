@@ -1,5 +1,7 @@
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} ^/novel/
-RewriteRule ([^.]*)(.php)? $1.php [L]
+RewriteRule ([^.]*)(.php)? $1.php
+RewriteCond %{REQUEST_FILENAME} !^/novel/
+RewriteRule . /index.html [L]
 </IfModule>
