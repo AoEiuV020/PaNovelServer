@@ -8,6 +8,7 @@ require_once __DIR__ . '/../model/Novel.php';
 try {
     $novel = new Novel($data);
     include __DIR__ . '/../connect.php';
+
     $con->close();
 } catch (Throwable $e) {
     serverError($e->getMessage());
