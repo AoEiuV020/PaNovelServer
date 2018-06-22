@@ -23,4 +23,9 @@ class Novel
             }
         }
     }
+
+    public function bookId()
+    {
+        return "$this->name.$this->author.$this->site";
+    }
 }

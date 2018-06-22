@@ -25,6 +25,7 @@ function queryNovel(mysqli $con, Novel $novel)
         $novel->id = $resultNovel->id;
         return $resultNovel;
     } else {
+        error_log('novel not found: ' . $novel->bookId());
         return null;
     }
 }

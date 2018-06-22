@@ -4,11 +4,12 @@
  */
 
 require_once __DIR__ . '/model/MobResponse.php';
-require_once __DIR__ . '/Datasource.php';
+require_once __DIR__ . '/DataSource.php';
 $ds = new DataSource;
 
 function illegalRequest($message = null)
 {
+    error_log($message);
     $response = new MobResponse();
     $response->illegalRequest($message);
     die(json_encode($response));
@@ -16,6 +17,7 @@ function illegalRequest($message = null)
 
 function serverError($message = null)
 {
+    error_log($message);
     $response = new MobResponse();
     $response->serverError($message);
     die(json_encode($response));

@@ -9,7 +9,8 @@ error_reporting(-1);
 include __DIR__ . '/connect.php';
 
 $novel = new Novel();
-$novel->site = "起点中文";
+$novel->site = "起点中";
 $novel->author = "圣骑士的传说";
 $novel->name = "修真聊天群";
-print_r(queryNovel($con, $novel));
+var_dump(queryNovel($con, $novel));
+

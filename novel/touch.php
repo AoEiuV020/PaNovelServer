@@ -5,10 +5,15 @@
 
 require_once __DIR__ . '/../request.php';
 require_once __DIR__ . '/../model/Novel.php';
+require_once __DIR__ . '/../query.php';
+
 try {
     $novel = new Novel($data);
     include __DIR__ . '/../connect.php';
-
+    $exists = queryNovel($con, $novel);
+    if ($exists == null) {
+        return false;
+    }
     $con->close();
 } catch (Throwable $e) {
     serverError($e->getMessage());

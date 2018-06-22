@@ -4,6 +4,7 @@
  */
 
 require_once __DIR__ . '/env.php';
+
 $data = null;
 try {
     $post = file_get_contents('php://input');

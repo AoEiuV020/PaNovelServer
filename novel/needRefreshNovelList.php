@@ -7,7 +7,10 @@ require_once __DIR__ . '/../request.php';
 require_once __DIR__ . '/../model/Novel.php';
 try {
     $limit = $data;
+    error_log('query refresh list limit: ' . $limit);
     requireArg(is_int($limit), "limit must be int,");
+    requireArg($limit > 0, "require limit > 0,");
+    requireArg($limit < 500, "require limit < 500");
 
     include __DIR__ . '/../connect.php';
     $stmt = $con->prepare("select * from novel where check_update_time > ? order by check_update_time asc limit ?");
