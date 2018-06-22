@@ -1,18 +1,22 @@
-<pre>
 <?php
 /**
  * Created by AoEiuV020 on 2018.06.21-22:52:50.
  */
-$con = new mysqli("localhost", "panovel", "panovel", "panovel");
-$con->set_charset("utf-8");
-if ($con->connect_error) {
-    die('connect error: ' . $con->connect_error);
-}
-$con->query('set names utf8');
-$result = $con->query("select * from novel");
-while ($row = $result->fetch_assoc()) {
-    print_r($row);
-}
+
+require_once __DIR__ . '/connect.php';
+$stmt = $con->prepare("select * from novel where name = ? and author = ? and site = ?");
+$name = "修真聊天群";
+$author = "圣骑士的传说";
+$site = "31小说";
+$id = 9;
+$stmt->bind_param("sss", $name, $author, $site);
+$stmt->execute();
+$result = $stmt->get_result();
 $con->close();
-?>
-</pre>
+$novels = [];
+while ($row = $result->fetch_assoc()) {
+    $novels[] = $row;
+}
+$response = new MobResponse();
+$response->success($novels);
+print json_encode($response);
