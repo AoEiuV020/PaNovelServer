@@ -18,5 +18,5 @@ function updateNovel(mysqli $con, Novel $novel)
         $novel->detail, $novel->chaptersCount, $novel->receiveUpdateTime, $novel->checkUpdateTime,
         $novel->id);
     $stmt->execute();
-    assertArg(!$stmt->error, 'update error: ' . $stmt->errno . $stmt->error);
+    assertArg(!$stmt->error, 'update error: ' . $stmt->error);
 }

@@ -7,6 +7,7 @@ require_once __DIR__ . '/../request.php';
 require_once __DIR__ . '/../model/Novel.php';
 require_once __DIR__ . '/../query.php';
 require_once __DIR__ . '/../update.php';
+require_once __DIR__ . '/../insert.php';
 
 try {
     $novel = new Novel($data);
@@ -14,11 +15,12 @@ try {
     requireArg(!is_null($novel->site), "require site");
     requireArg(!is_null($novel->author), "require author");
     requireArg(!is_null($novel->name), "require name");
-    requireArg(!is_null($novel->chaptersCount), "require chapters_count");
+    requireArg(!is_null($novel->chaptersCount), "require chaptersCount");
     include __DIR__ . '/../connect.php';
     $exists = queryNovel($con, $novel);
     $hasUpdate = false;
     if ($exists == null) {
+        insertNovel($con, $novel);
         $hasUpdate = false;
     } else {
         if ($novel->chaptersCount < $exists->chaptersCount) {
