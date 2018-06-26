@@ -12,3 +12,4 @@ composer.phar
 #
 /config.ini.php
 /novel/lastTime
+jpush.log

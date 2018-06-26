@@ -14,8 +14,10 @@ function updateNovel(mysqli $con, Novel $novel)
         // stmt只需要初始化一次，
         $stmt = $con->prepare('update novel set site = ?, author = ?, name = ?, detail = ?, chapters_count = ?, receive_update_time = ?, check_update_time = ? where id = ?');
     }
+    $rut = $novel->receiveUpdateTime->format(SQL_TIME_FORMAT);
+    $cut = $novel->checkUpdateTime->format(SQL_TIME_FORMAT);
     $stmt->bind_param('ssssissi', $novel->site, $novel->author, $novel->name,
-        $novel->detail, $novel->chaptersCount, $novel->receiveUpdateTime, $novel->checkUpdateTime,
+        $novel->detail, $novel->chaptersCount, $rut, $cut,
         $novel->id);
     $stmt->execute();
     assertArg(!$stmt->error, 'update error: ' . $stmt->error);

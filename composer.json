@@ -9,6 +9,7 @@
   "require": {
     "ext-mysqli": "*",
     "ext-json": "*",
-    "php": ">=7.0"
+    "php": ">=7.0",
+    "jpush/jpush": "3.5"
   }
 }

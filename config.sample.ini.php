@@ -10,3 +10,5 @@ $ds->database = 'panovel';
 // utf8不能写成utf-8,
 $ds->charset = 'utf8';
 
+$jc->appKey = 'dd1066407b044738b6479275';
+$jc->masterSecret = 'e8cc9a76d5b7a580859bcfa7';

@@ -14,7 +14,7 @@ function insertNovel(mysqli $con, Novel $novel)
         $stmt = $con->prepare('insert into novel(site, author, name, detail, chapters_count, receive_update_time, check_update_time) values (?, ?, ?, ?, ?, ?, ?)');
     }
     $stmt->bind_param('ssssiss', $novel->site, $novel->author, $novel->name,
-        $novel->detail, $novel->chaptersCount, $novel->receiveUpdateTime, $novel->checkUpdateTime);
+        $novel->detail, $novel->chaptersCount, $novel->receiveUpdateTime->format(SQL_TIME_FORMAT), $novel->checkUpdateTime->format(SQL_TIME_FORMAT));
     $stmt->execute();
     assertArg(!$stmt->error, 'insert error: ' . $stmt->error);
     $novel->id = $stmt->insert_id;

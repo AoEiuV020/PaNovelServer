@@ -6,7 +6,9 @@
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/model/MobResponse.php';
 require_once __DIR__ . '/DataSource.php';
-$ds = new DataSource;
+require_once __DIR__ . '/JpushConfig.php';
+$ds = new DataSource();
+$jc = new JpushConfig();
 
 function illegalRequest($message = null)
 {
@@ -22,6 +24,14 @@ function serverError($message = null)
     $response = new MobResponse();
     $response->serverError($message);
     die(json_encode($response));
+}
+
+function catchException(Throwable $e)
+{
+    $errstr = $e->getMessage();
+    $errfile = basename($e->getFile());
+    $errline = $e->getLine();
+    serverError("$errstr at <$errfile,$errline>");
 }
 
 function success($data)

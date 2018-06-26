@@ -4,9 +4,53 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
     "This file is @generated automatically"
   ],
-  "hash": "d57262f608223f38121bd4b790d7c582",
-  "content-hash": "537eab44417a3e79de1318797c91b79a",
-  "packages": [],
+  "hash": "e1c538425ea9b6cf9ce9d31e81d15e02",
+  "content-hash": "47eec2793e69cde7e7fb04d5112bea5d",
+  "packages": [
+    {
+      "name": "jpush/jpush",
+      "version": "v3.5.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/jpush/jpush-api-php-client.git",
+        "reference": "3fea757d549f08d01e453e9b67fe54948bcc9b5b"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/jpush/jpush-api-php-client/zipball/3fea757d549f08d01e453e9b67fe54948bcc9b5b",
+        "reference": "3fea757d549f08d01e453e9b67fe54948bcc9b5b",
+        "shasum": ""
+      },
+      "require": {
+        "ext-curl": "*",
+        "php": ">=5.3.3"
+      },
+      "require-dev": {
+        "phpunit/phpunit": "*"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
+          "JPush\\": "src/JPush/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "JPush",
+          "email": "support@jpush.cn",
+          "homepage": "https://www.jpush.cn/",
+          "role": "Developer"
+        }
+      ],
+      "description": "JPush API PHP Client",
+      "homepage": "https://github.com/jpush/jpush-api-php-client",
+      "time": "2016-07-27 09:02:26"
+    }
+  ],
   "packages-dev": [],
   "aliases": [],
   "minimum-stability": "stable",

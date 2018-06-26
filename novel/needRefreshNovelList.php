@@ -5,6 +5,7 @@
 
 require_once __DIR__ . '/../request.php';
 require_once __DIR__ . '/../model/Novel.php';
+require_once __DIR__ . '/../connect.php';
 try {
     $limit = $data;
     error_log('query refresh list limit: ' . $limit);
@@ -12,7 +13,6 @@ try {
     requireArg($limit > 0, "require limit > 0,");
     requireArg($limit < 500, "require limit < 500");
 
-    include __DIR__ . '/../connect.php';
     $stmt = $con->prepare("select * from novel where check_update_time > ? order by check_update_time asc limit ?");
 
     // 在文件保存上一轮最新一本小说的时间，
@@ -51,5 +51,5 @@ try {
 
     success($arr);
 } catch (Throwable $e) {
-    serverError($e->getMessage());
+    catchException($e);
 }

@@ -9,5 +9,5 @@ try {
     assertArg(!$con->connect_error, 'connect error: ' . $con->connect_error);
     $con->set_charset($ds->charset);
 } catch (Throwable $e) {
-    serverError($e->getMessage());
+    catchException($e);
 }

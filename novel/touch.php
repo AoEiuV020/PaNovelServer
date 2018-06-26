@@ -9,6 +9,8 @@ require_once __DIR__ . '/../query.php';
 require_once __DIR__ . '/../update.php';
 require_once __DIR__ . '/../insert.php';
 require_once __DIR__ . '/../delete.php';
+require_once __DIR__ . '/../push.php';
+require_once __DIR__ . '/../connect.php';
 
 try {
     $novel = new Novel($data);
@@ -17,7 +19,6 @@ try {
     requireArg(!is_null($novel->author), "require author");
     requireArg(!is_null($novel->name), "require name");
     requireArg(!is_null($novel->chaptersCount), "require chaptersCount");
-    include __DIR__ . '/../connect.php';
     $exists = queryNovel($con, $novel);
     $hasUpdate = false;
     if ($exists == null) {
@@ -29,7 +30,6 @@ try {
             $hasUpdate = false;
         } else {
             // 如果有更新，
-            // TODO: 这里要推到极光，
             $hasUpdate = true;
         }
         error_log("hasUpdate $hasUpdate, {$novel->chaptersCount}/{$exists->chaptersCount}");
@@ -38,15 +38,18 @@ try {
             deleteNovel($con, $exists);
         } else {
             // 统一更新成服务器收到的时间，不保存客户端上传的时间，可能受时区影响，
-            $novel->checkUpdateTime = now();
+            $novel->checkUpdateTime = new DateTime(now());
             // receiveUpdateTime保留，以客户端上传的为准，
             // 按理说刷出来的章节数不会小于服务器上的，但是以防万一，以新上传的为准，覆盖旧的，
             updateNovel($con, $novel);
+        }
+        if ($hasUpdate) {
+            pushUpdate($novel);
         }
     }
 
     $con->close();
     success($hasUpdate);
 } catch (Throwable $e) {
-    serverError($e->getMessage());
+    catchException($e);
 }
