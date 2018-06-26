@@ -38,12 +38,11 @@ function myErrorHandler(
     /** @noinspection PhpUnusedParameterInspection */
     $errno,
     $errstr,
-    /** @noinspection PhpUnusedParameterInspection */
     $errfile,
-    /** @noinspection PhpUnusedParameterInspection */
     $errline)
 {
-    serverError($errstr);
+    $errfile = basename($errfile);
+    serverError("$errstr at <$errfile,$errline>");
 }
 
 set_error_handler("myErrorHandler");

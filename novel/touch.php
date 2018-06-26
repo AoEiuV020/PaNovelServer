@@ -19,7 +19,6 @@ try {
     requireArg(!is_null($novel->chaptersCount), "require chaptersCount");
     include __DIR__ . '/../connect.php';
     $exists = queryNovel($con, $novel);
-    error_log("hasUpdate {$novel->chaptersCount}/{$exists->chaptersCount}");
     $hasUpdate = false;
     if ($exists == null) {
         insertNovel($con, $novel);
@@ -33,6 +32,7 @@ try {
             // TODO: 这里要推到极光，
             $hasUpdate = true;
         }
+        error_log("hasUpdate $hasUpdate, {$novel->chaptersCount}/{$exists->chaptersCount}");
         if (!$hasUpdate && $novel->receiveUpdateTime < sqlTime(strtotime('-3 day'))) {
             // 如果小说三天没更新，就删除，
             deleteNovel($con, $exists);
