@@ -7,7 +7,7 @@ require_once __DIR__ . '/env.php';
 
 function insertNovel(mysqli $con, Novel $novel)
 {
-    loge('insert: ' . json_encode($novel));
+    logd('insert: ' . json_encode($novel));
     static $stmt;
     if ($stmt == null) {
         // stmt只需要初始化一次，好像没多大意义，只调用一次，

@@ -30,11 +30,11 @@ function pushUpdate(Novel $novel)
         ->setMessage('msgContent', null, null, $msg);
     try {
         $response = $payLoad->send();
-        loge('jpush response: ' . json_encode($response));
+        logd('jpush response: ' . json_encode($response));
     } catch (\JPush\Exceptions\APIConnectionException $e) {
-        loge('jpush connect error: ' . $e->getMessage());
+        logd('jpush connect error: ' . $e->getMessage());
     } catch (\JPush\Exceptions\APIRequestException $e) {
-        loge('jpush request error: ' . $e->getMessage());
+        logd('jpush request error: ' . $e->getMessage());
         if ($e->getCode() == 1011) {
             // 如果没人订阅，
             global $con;
