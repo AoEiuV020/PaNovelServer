@@ -1,9 +1,9 @@
 server {
 	listen 80;
-    server_name php;
+    server_name  panovel.aoeiuv020.cc;
     access_log  /var/log/nginx/php.access.log;
 	error_log  /var/log/nginx/php.error.log;
-	root   /mnt/sext/code/git/PaNovelServer;
+	root   /var/www/panovel;
 
     location / {
         index  index.php index.html index.htm;
