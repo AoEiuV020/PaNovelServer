@@ -13,8 +13,10 @@ function insertNovel(mysqli $con, Novel $novel)
         // stmt只需要初始化一次，好像没多大意义，只调用一次，
         $stmt = $con->prepare('insert into novel(site, author, name, detail, chapters_count, receive_update_time, check_update_time) values (?, ?, ?, ?, ?, ?, ?)');
     }
+    $rut = $novel->receiveUpdateTime->format(SQL_TIME_FORMAT);
+    $cut = $novel->checkUpdateTime->format(SQL_TIME_FORMAT);
     $stmt->bind_param('ssssiss', $novel->site, $novel->author, $novel->name,
-        $novel->detail, $novel->chaptersCount, $novel->receiveUpdateTime->format(SQL_TIME_FORMAT), $novel->checkUpdateTime->format(SQL_TIME_FORMAT));
+        $novel->detail, $novel->chaptersCount, $rut, $cut);
     $stmt->execute();
     assertArg(!$stmt->error, 'insert error: ' . $stmt->error);
     $novel->id = $stmt->insert_id;
