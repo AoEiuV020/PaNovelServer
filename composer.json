@@ -1,0 +1,14 @@
+{
+  "name": "root/pa-novel-server",
+  "authors": [
+    {
+      "name": "AoEiuV020",
+      "email": "aoeiuv020@gmail.com"
+    }
+  ],
+  "require": {
+    "ext-mysqli": "*",
+    "ext-json": "*",
+    "php": ">=7.0"
+  }
+}

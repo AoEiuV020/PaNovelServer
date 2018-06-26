@@ -3,6 +3,7 @@
  * Created by AoEiuV020 on 2018.06.22-09:27:03.
  */
 
+require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/model/MobResponse.php';
 require_once __DIR__ . '/DataSource.php';
 $ds = new DataSource;
