@@ -41,16 +41,22 @@ class Novel implements JsonSerializable
 
     public function jsonSerialize()
     {
-        return array(
+        $arr = array(
             'id' => $this->id,
             'site' => $this->site,
             'author' => $this->author,
             'name' => $this->name,
             'detail' => $this->detail,
-            'chaptersCount' => $this->chaptersCount,
-            'receiveUpdateTime' => $this->receiveUpdateTime->format(DATE_ISO8601),
-            'checkUpdateTime' => $this->checkUpdateTime->format(DATE_ISO8601)
+            'chaptersCount' => $this->chaptersCount
         );
+        if (!is_null($this->receiveUpdateTime)) {
+            $arr['receiveUpdateTime'] = $this->receiveUpdateTime->format(DATE_ISO8601);
+        }
+        if (!is_null($this->checkUpdateTime)) {
+            $arr['checkUpdateTime'] = $this->checkUpdateTime->format(DATE_ISO8601);
+        }
+
+        return $arr;
     }
 
     public function bookId()
