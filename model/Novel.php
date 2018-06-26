@@ -20,7 +20,7 @@ class Novel implements JsonSerializable
      */
     public $checkUpdateTime; // 2018-06-19 18:03:54
 
-    public function __construct(array $array = null)
+    public function __construct(array $array)
     {
         $this->id = $array['id'] ?? null;
         $this->site = $array['site'] ?? null;
