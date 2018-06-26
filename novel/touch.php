@@ -14,7 +14,7 @@ require_once __DIR__ . '/../connect.php';
 
 try {
     $novel = new Novel($data);
-    error_log('touch novel: ' . json_encode($novel));
+    loge('touch novel: ' . json_encode($novel));
     requireArg(!is_null($novel->site), "require site");
     requireArg(!is_null($novel->author), "require author");
     requireArg(!is_null($novel->name), "require name");
@@ -32,7 +32,7 @@ try {
             // 如果有更新，
             $hasUpdate = true;
         }
-        error_log("hasUpdate $hasUpdate, {$novel->chaptersCount}/{$exists->chaptersCount}");
+        loge("hasUpdate $hasUpdate, {$novel->chaptersCount}/{$exists->chaptersCount}");
         if (!$hasUpdate && $novel->receiveUpdateTime < sqlTime(strtotime('-3 day'))) {
             // 如果小说三天没更新，就删除，
             deleteNovel($con, $exists);

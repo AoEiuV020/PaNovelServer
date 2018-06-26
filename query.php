@@ -7,7 +7,7 @@ require_once __DIR__ . '/env.php';
 
 function queryNovel(mysqli $con, Novel $novel)
 {
-    error_log('query: ' . json_encode($novel));
+    loge('query: ' . json_encode($novel));
     assertArg(!is_null($novel->site), "require site");
     assertArg(!is_null($novel->author), "require author");
     assertArg(!is_null($novel->name), "require name");
@@ -27,7 +27,7 @@ function queryNovel(mysqli $con, Novel $novel)
         $result->free();
         return $resultNovel;
     } else {
-        error_log('novel not found: ' . $novel->bookId());
+        loge('novel not found: ' . $novel->bookId());
         $result->free();
         return null;
     }

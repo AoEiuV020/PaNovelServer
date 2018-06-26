@@ -7,7 +7,7 @@ require_once __DIR__ . '/env.php';
 
 function deleteNovel(mysqli $con, Novel $novel)
 {
-    error_log('delete: ' . json_encode($novel));
+    loge('delete: ' . json_encode($novel));
     assertArg($novel->id, 'delete require id,');
     static $stmt;
     if ($stmt == null) {

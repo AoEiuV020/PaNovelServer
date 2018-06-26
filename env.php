@@ -10,9 +10,14 @@ require_once __DIR__ . '/JpushConfig.php';
 $ds = new DataSource();
 $jc = new JpushConfig();
 
+function loge($message)
+{
+    // 暂且不打日志，
+}
+
 function illegalRequest($message = null)
 {
-    error_log($message);
+    loge($message);
     $response = new MobResponse();
     $response->illegalRequest($message);
     die(json_encode($response));
@@ -20,7 +25,7 @@ function illegalRequest($message = null)
 
 function serverError($message = null)
 {
-    error_log($message);
+    loge($message);
     $response = new MobResponse();
     $response->serverError($message);
     die(json_encode($response));

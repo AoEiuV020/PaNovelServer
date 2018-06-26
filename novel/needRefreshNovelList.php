@@ -8,7 +8,7 @@ require_once __DIR__ . '/../model/Novel.php';
 require_once __DIR__ . '/../connect.php';
 try {
     $limit = $data;
-    error_log('query refresh list limit: ' . $limit);
+    loge('query refresh list limit: ' . $limit);
     requireArg(is_int($limit), "limit must be int,");
     requireArg($limit > 0, "require limit > 0,");
     requireArg($limit < 500, "require limit < 500");
@@ -55,7 +55,7 @@ try {
     }
     $con->close();
 
-    error_log("query refresh list later than $lastTime count: " . count($arr));
+    loge("query refresh list later than $lastTime count: " . count($arr));
 
     success($novelList);
 } catch (Throwable $e) {
