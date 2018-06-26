@@ -76,10 +76,18 @@ function assertArg($value, string $message)
     return $value;
 }
 
+define('SQL_TIME_FORMAT', 'Y-m-d H:i:s');
+
 function now()
 {
-    return date('Y-m-d H:i:s');
+    return date(SQL_TIME_FORMAT);
 }
+
+function sqlTime($time)
+{
+    return date(SQL_TIME_FORMAT, $time);
+}
+
 
 function convertUnderline($str)
 {
@@ -95,6 +103,15 @@ function humpToLine($str)
         return '_' . strtolower($matches[0]);
     }, $str);
     return $str;
+}
+
+function timeArrayToTime(array $array)
+{
+    // 这东西不带时区，看起来就很不靠谱，
+    // 最后一个is_dst明明声明里有，但是传入会报错，
+    //  mktime() expects at most 6 parameters, 7 given
+    return mktime($array['hour'], $array['minute'], $array['second'],
+        $array['month'], $array['day'], $array['year']/*, $array['is_dst']*/);
 }
 
 
