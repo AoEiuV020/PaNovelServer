@@ -25,7 +25,6 @@ function pushUpdate(Novel $novel)
     $msg['novel'] = json_encode($novel);
     $payLoad = $client->push()
         ->setPlatform('android')
-        ->addAlias('debug')
         ->addTag($tag)
         ->setMessage('msgContent', null, null, $msg);
     try {
