@@ -19,6 +19,7 @@ try {
     requireArg(!is_null($novel->author), "require author");
     requireArg(!is_null($novel->name), "require name");
     requireArg(!is_null($novel->chaptersCount), "require chaptersCount");
+    requireArg($novel->chaptersCount > 0, "require chaptersCount > 0");
     $exists = queryNovel($con, $novel);
     $hasUpdate = false;
     if ($exists == null) {
