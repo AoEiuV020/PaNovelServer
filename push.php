@@ -29,18 +29,20 @@ function pushUpdate(Novel $novel)
         ->setMessage('msgContent', null, null, $msg);
     try {
         $response = $payLoad->send();
-        logd('jpush response: ' . json_encode($response));
+        logd('jpush response: ' . json_encode($response, JSON_UNESCAPED_UNICODE));
     } /** @noinspection PhpRedundantCatchClauseInspection */
     catch (\JPush\Exceptions\APIConnectionException $e) {
         // 明明有抛的异常，PhpStorm警告没有抛，
         logd('jpush connect error: ' . $e->getMessage());
     } /** @noinspection PhpRedundantCatchClauseInspection */
     catch (\JPush\Exceptions\APIRequestException $e) {
-        logd('jpush request error: ' . $e->getMessage());
         if ($e->getCode() == 1011) {
+            logd("无人订阅: {$msg['novel']}\n");
             // 如果没人订阅，
             global $con;
             deleteNovel($con, $novel);
+        } else {
+            logd("jpush request error {$e->getCode()}: {$e->getMessage()}");
         }
     }
 }

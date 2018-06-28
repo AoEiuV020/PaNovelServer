@@ -10,7 +10,7 @@ require_once __DIR__ . '/../connect.php';
 
 try {
     $novelMap = $data;
-    logd('query novel list: ' . json_encode($novelMap));
+    logd('query novel list: ' . json_encode($novelMap, JSON_UNESCAPED_UNICODE));
     $resultMap = array();
     foreach ($novelMap as $clientId => $novelArray) {
         $novel = new Novel($novelArray);

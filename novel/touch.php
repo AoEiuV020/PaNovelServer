@@ -14,7 +14,7 @@ require_once __DIR__ . '/../connect.php';
 
 try {
     $novel = new Novel($data);
-    logd('touch novel: ' . json_encode($novel));
+    logd('touch novel: ' . json_encode($novel, JSON_UNESCAPED_UNICODE));
     requireArg(!is_null($novel->site), "require site");
     requireArg(!is_null($novel->author), "require author");
     requireArg(!is_null($novel->name), "require name");

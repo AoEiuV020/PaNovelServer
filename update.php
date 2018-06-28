@@ -7,7 +7,7 @@ require_once __DIR__ . '/env.php';
 
 function updateNovel(mysqli $con, Novel $novel)
 {
-    logd('update: ' . json_encode($novel));
+    logd('update: ' . json_encode($novel, JSON_UNESCAPED_UNICODE));
     assertArg($novel->id, 'update require id,');
     static $stmt;
     if ($stmt == null) {

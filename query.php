@@ -7,7 +7,7 @@ require_once __DIR__ . '/env.php';
 
 function queryNovel(mysqli $con, Novel $novel)
 {
-    logd('query: ' . json_encode($novel));
+    logd('query: ' . json_encode($novel, JSON_UNESCAPED_UNICODE));
     assertArg(!is_null($novel->site), "require site");
     assertArg(!is_null($novel->author), "require author");
     assertArg(!is_null($novel->name), "require name");
