@@ -22,7 +22,7 @@ function pushUpdate(Novel $novel)
     $client = new JPush\Client($jc->appKey, $jc->masterSecret);
     $tag = tagMd5($novel);
     $msg = array();
-    $msg['novel'] = json_encode($novel);
+    $msg['novel'] = json_encode($novel, JSON_UNESCAPED_UNICODE);
     $payLoad = $client->push()
         ->setPlatform('android')
         ->addTag($tag)
@@ -30,9 +30,12 @@ function pushUpdate(Novel $novel)
     try {
         $response = $payLoad->send();
         logd('jpush response: ' . json_encode($response));
-    } catch (\JPush\Exceptions\APIConnectionException $e) {
+    } /** @noinspection PhpRedundantCatchClauseInspection */
+    catch (\JPush\Exceptions\APIConnectionException $e) {
+        // 明明有抛的异常，PhpStorm警告没有抛，
         logd('jpush connect error: ' . $e->getMessage());
-    } catch (\JPush\Exceptions\APIRequestException $e) {
+    } /** @noinspection PhpRedundantCatchClauseInspection */
+    catch (\JPush\Exceptions\APIRequestException $e) {
         logd('jpush request error: ' . $e->getMessage());
         if ($e->getCode() == 1011) {
             // 如果没人订阅，
