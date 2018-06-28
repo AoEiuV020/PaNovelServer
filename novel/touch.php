@@ -33,7 +33,7 @@ try {
             $hasUpdate = true;
         }
         logd("hasUpdate $hasUpdate, {$novel->chaptersCount}/{$exists->chaptersCount}");
-        if (!$hasUpdate && $novel->receiveUpdateTime < sqlTime(strtotime('-3 day'))) {
+        if (!$hasUpdate && $novel->receiveUpdateTime->getTimestamp() < strtotime('-3 day')) {
             // 如果小说三天没更新，就删除，
             deleteNovel($con, $exists);
         } else {
