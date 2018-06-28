@@ -24,7 +24,7 @@ try {
     $hasUpdate = false;
     if ($exists == null) {
         insertNovel($con, $novel);
-        $hasUpdate = false;
+        $hasUpdate = true;
     } else {
         if ($novel->chaptersCount <= $exists->chaptersCount) {
             // 如果没有更新，
@@ -44,9 +44,9 @@ try {
             // 按理说刷出来的章节数不会小于服务器上的，但是以防万一，以新上传的为准，覆盖旧的，
             updateNovel($con, $novel);
         }
-        if ($hasUpdate) {
-            pushUpdate($novel);
-        }
+    }
+    if ($hasUpdate) {
+        pushUpdate($novel);
     }
 
     $con->close();
