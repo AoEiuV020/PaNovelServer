@@ -5,6 +5,7 @@
 
 class Config
 {
+    public $apiUrl;
     public $minVersion;
     public $qqGroup;
     public $redPacket;
