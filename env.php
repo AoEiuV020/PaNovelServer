@@ -6,11 +6,13 @@
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/model/MobResponse.php';
 require_once __DIR__ . '/model/Config.php';
+require_once __DIR__ . '/model/Message.php';
 require_once __DIR__ . '/DataSource.php';
 require_once __DIR__ . '/JpushConfig.php';
 $ds = new DataSource();
 $jc = new JpushConfig();
 $nc = new Config();
+$msg = new Message();
 
 function logd($message)
 {
